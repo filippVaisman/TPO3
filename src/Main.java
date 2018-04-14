@@ -17,4 +17,9 @@ public class Main {
     public static void azaza(){
         System.out.println("oryyyyyy");
     }
+
+    public void moreFunctions(){
+        System.out.println("do nothing");
+    }
+
 }
