@@ -5,4 +5,7 @@ public class Main {
             System.out.println("PYLYP pidor");
         }
     }
+    public static void azaza(){
+        System.out.println("oryyyyyy");
+    }
 }
