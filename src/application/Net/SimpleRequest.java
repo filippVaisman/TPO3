@@ -20,8 +20,6 @@ public class SimpleRequest {
         os.write(jsonMessage.getBytes());
         log("request sended");
         os.flush();
-        //os.close();
-
     }
 
     private void log(String message){

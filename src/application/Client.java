@@ -1,5 +1,7 @@
 package application;
 
+import application.Json.JsonFormater;
+import application.Json.KeyValue;
 import application.Net.SimpleRequest;
 
 import java.io.IOException;
@@ -7,11 +9,12 @@ import java.io.IOException;
 public class Client {
     //TODO: make ip ok
     final private String ipMainServer = "localhost";
+    final private String ip= "localhost";
     final private int port = 1235;
     final private int portMainServer = 1234;
     private String [] languages;
 
-    public void sendRequestTomMainServer(String json){
+    private void sendRequestTomMainServer(String json){
         try {
             SimpleRequest requestToMain = new SimpleRequest(ipMainServer,portMainServer,this.getClass());
             requestToMain.sendRequest(json);
@@ -20,10 +23,25 @@ public class Client {
         }
     }
 
+    private String construateJson(String word,String language){
 
+        JsonFormater jsonFormater = new JsonFormater();
+        jsonFormater.addValue(new KeyValue("senderName","Client"));
+        jsonFormater.addValue(new KeyValue("word",word));
+        jsonFormater.addValue(new KeyValue("language",language));
+        jsonFormater.addValue(new KeyValue("port",this.port+""));
+        jsonFormater.addValue(new KeyValue("ip",this.ip));
 
-    public void translate(String word){
-        //TODO: make json here
-        sendRequestTomMainServer("");
+        return jsonFormater.constructJson();
+
     }
+
+
+    public void translate(String word,String language){
+        //TODO: make json here
+        sendRequestTomMainServer(construateJson(word,language));
+    }
+
+
+
 }
