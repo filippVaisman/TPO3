@@ -15,10 +15,10 @@ public class SimpleListener {
     public String listenConnection() throws IOException {
 
         Socket socket = serverSocket.accept();
+        System.out.println(socket.getPort());
         InputStream is = socket.getInputStream();
-        String json = getMessage(is);
-
-        return json;
+        socket.close();
+        return "";
 
     }
 
