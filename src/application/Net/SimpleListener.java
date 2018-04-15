@@ -17,11 +17,14 @@ public class SimpleListener {
     public String listenConnection() throws IOException {
 
         Socket socket = serverSocket.accept();
-        log("get new connection on port " + socket.getPort());
-        InputStream is = socket.getInputStream();
-        String json = getMessage(is);
 
-        return json;
+        log("get new connection on port " + socket.getPort());
+
+        System.out.println(socket.getPort());
+
+        InputStream is = socket.getInputStream();
+        socket.close();
+        return "";
 
     }
 
