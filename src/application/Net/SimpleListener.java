@@ -7,14 +7,17 @@ import java.net.Socket;
 
 public class SimpleListener {
     private ServerSocket serverSocket;
+    private Class className;
 
-    public SimpleListener(int port) throws IOException {
+    public SimpleListener(int port, Class className) throws IOException {
         serverSocket = new ServerSocket(port);
+        this.className = className;
     }
 
     public String listenConnection() throws IOException {
 
         Socket socket = serverSocket.accept();
+        log("get new connection on port " + socket.getPort());
         InputStream is = socket.getInputStream();
         String json = getMessage(is);
 
@@ -32,6 +35,9 @@ public class SimpleListener {
 
         return result.toString();
 
+    }
+    private void log(String message){
+        System.out.println(className.getName() + ": " + message);
     }
 
 }
