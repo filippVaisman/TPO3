@@ -11,7 +11,7 @@ public class Main {
 
 
         try {
-            SimpleListener l  = new SimpleListener(1221);
+            SimpleListener l  = new SimpleListener(1221, SimpleListener.class);
             new Thread(()->{
                 int i=0;
                 while(i<10){
