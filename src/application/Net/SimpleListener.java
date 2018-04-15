@@ -24,7 +24,7 @@ public class SimpleListener {
 
         InputStream is = socket.getInputStream();
         socket.close();
-        return "";
+        return getMessage(is);
 
     }
 
