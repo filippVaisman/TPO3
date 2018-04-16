@@ -51,7 +51,7 @@ public class Client {
     }
 
     private String listenTranslateResponse(){
-
+        System.out.println("Client listener started");
                 try {
                     return listener.listenConnection();
                 } catch (Exception e) {
@@ -62,9 +62,12 @@ public class Client {
 
 
     public String translate(String word,String language){
+        System.out.println("Request sent");
         sendRequestTomMainServer(construateJson(word,language));
+        System.out.println("Client translate want sent");
 //        listenTranslateResponse();
         String response = listenTranslateResponse();
+        System.out.println(response);
         JsonSerializer serializer = new JsonSerializer(response);
 
         return serializer.getElement("word");

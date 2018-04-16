@@ -1,7 +1,7 @@
 package application.Servers;
 
+import application.Exceptions.WordNotFoundException;
 import application.Json.JsonFormater;
-import application.Json.JsonMessageWrapper;
 import application.Json.JsonSerializer;
 import application.Json.KeyValue;
 import application.Net.SimpleListener;
@@ -38,22 +38,44 @@ public class LanguageServer {
     public void startServer() throws IOException {
 
         new Thread(()->{
-            SimpleRequest simpleRequest = null;
-            try {
-                simpleRequest = new SimpleRequest("localhost",clientPort,this.getClass());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             while(true){
+                SimpleRequest simpleRequest = null;
                 try {
-                    String word = simpleListener.listenConnection();
-                    JsonSerializer serializer = new JsonSerializer(word);
-                    JsonFormater formater = new JsonFormater();
-                    formater.addValue(new KeyValue("word",translate(serializer.getElement("word"))));
+                    simpleRequest = new SimpleRequest("localhost",clientPort,this.getClass());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                JsonFormater formater=null;
+                try {
+                    String json = simpleListener.listenConnection();
+                    JsonSerializer serializer = new JsonSerializer(json);
+                    formater = new JsonFormater();
+
+                    String word = serializer.getElement("word");
+
+                    if(word == null)
+                        throw new WordNotFoundException();
+                    try {
+                        formater.addValue(new KeyValue("word", translate(word)));
+                    }catch (NullPointerException e){
+                        formater.addValue(new KeyValue("word","not found"));
+                        try {
+                            simpleRequest.sendRequest(formater.constructJson());
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
                     String jsonResponse = formater.constructJson();
                     simpleRequest.sendRequest(jsonResponse);
                 } catch (IOException e) {
                     e.printStackTrace();
+                } catch (WordNotFoundException e) {
+                    formater.addValue(new KeyValue("word","not found"));
+                    try {
+                        simpleRequest.sendRequest(formater.constructJson());
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
                 }
             }
         }).start();

@@ -18,6 +18,8 @@ public class SimpleListener {
 
     public String listenConnection() throws IOException {
 
+        log("Waiting for connection");
+
         Socket socket = serverSocket.accept();
 
         log("get new connection on port " + socket.getPort());

@@ -19,7 +19,11 @@ public class Main {
         }
 
         Client client = new Client();
-        client.translate("kot","EN");
+        System.out.println(client.translate("kot","EN"));
+
+        System.out.println(client.translate("czerwony","EN"));
+        System.out.println(client.translate("2131wadwd","EN"));
+//        System.out.println(client.translate("niebieski","EN"));
 
 
 
