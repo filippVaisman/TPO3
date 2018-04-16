@@ -1,7 +1,9 @@
 package application.Net;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -20,23 +22,27 @@ public class SimpleListener {
 
         log("get new connection on port " + socket.getPort());
 
-        System.out.println(socket.getPort());
-
         InputStream is = socket.getInputStream();
-        socket.close();
+
         return getMessage(is);
 
     }
 
 
     private String getMessage(InputStream inputStream) throws IOException {
-        int symb;
+        int symb=1;
         StringBuffer result = new StringBuffer();
-        while ((symb = (inputStream.read()))!=-1){
+
+        InputStreamReader ir = new InputStreamReader(inputStream);
+
+        log("Reading message");
+
+        int i = 0;
+        while ((symb = ir.read())!=125){
             result.append((char)symb);
         }
-
-        return result.toString();
+        log("message is: "+result.toString()+"}");
+        return result.toString()+"}";
 
     }
     private void log(String message){

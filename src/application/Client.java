@@ -7,8 +7,9 @@ import application.Net.SimpleRequest;
 import java.io.IOException;
 
 public class Client {
-    //TODO: make ip ok
-    final private String ipMainServer = "localhost";
+    //TODO: make ip not local
+    final private String ipMainServer = "192.168.0.94";
+
     final private String ip= "localhost";
     final private int port = 1235;
     final private int portMainServer = 1234;
@@ -26,7 +27,7 @@ public class Client {
     private String construateJson(String word,String language){
 
         JsonFormater jsonFormater = new JsonFormater();
-        jsonFormater.addValue(new KeyValue("senderName","Client"));
+        jsonFormater.addValue(new KeyValue("senderName","client"));
         jsonFormater.addValue(new KeyValue("word",word));
         jsonFormater.addValue(new KeyValue("language",language));
         jsonFormater.addValue(new KeyValue("port",this.port+""));
@@ -38,7 +39,6 @@ public class Client {
 
 
     public void translate(String word,String language){
-        //TODO: make json here
         sendRequestTomMainServer(construateJson(word,language));
     }
 

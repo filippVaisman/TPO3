@@ -1,4 +1,6 @@
 package application;
+import application.Servers.MainServer;
+
 import java.io.IOException;
 
 public class Main {
@@ -6,9 +8,14 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Client client = new Client();
+//        MainServer mainServer = new MainServer();
+//        mainServer.startServer();
 
-        client.translate("Lan","FR");
+        Client client = new Client();
+        client.translate("kot","EN");
+//        client.translate("Pojechac","EN");
+
+
 
     }
 }

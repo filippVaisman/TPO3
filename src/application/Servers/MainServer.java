@@ -20,17 +20,17 @@ public class MainServer {
             e.printStackTrace();
         }
     }
-    private void startServer(){
-        while(true){
-            new Thread(()->{
+    public void startServer(){
+        new Thread(()->{
+            while(true){
                 try {
                     listener.listenConnection();
                     //add method to parse json message
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }).start();
-        }
+            }
+        }).start();
     }
 
 }

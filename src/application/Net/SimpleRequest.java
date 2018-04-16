@@ -18,7 +18,7 @@ public class SimpleRequest {
 
         OutputStream os = socket.getOutputStream();
         os.write(jsonMessage.getBytes());
-        log("request sended");
+        log("request sent");
         os.flush();
     }
 
