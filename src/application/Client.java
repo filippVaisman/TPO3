@@ -1,24 +1,37 @@
 package application;
 
 import application.Json.JsonFormater;
+import application.Json.JsonSerializer;
 import application.Json.KeyValue;
+import application.Net.SimpleListener;
 import application.Net.SimpleRequest;
 
 import java.io.IOException;
 
 public class Client {
     //TODO: make ip not local
-    final private String ipMainServer = "192.168.0.94";
+    final private String ipMainServer = "localhost";
 
     final private String ip= "localhost";
     final private int port = 1235;
     final private int portMainServer = 1234;
     private String [] languages;
+    SimpleListener listener;
+
+    public Client(){
+        try {
+            listener = new SimpleListener(this.port,this.getClass());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void sendRequestTomMainServer(String json){
         try {
             SimpleRequest requestToMain = new SimpleRequest(ipMainServer,portMainServer,this.getClass());
             requestToMain.sendRequest(json);
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -37,9 +50,24 @@ public class Client {
 
     }
 
+    private String listenTranslateResponse(){
 
-    public void translate(String word,String language){
+                try {
+                    return listener.listenConnection();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+        return null;
+    }
+
+
+    public String translate(String word,String language){
         sendRequestTomMainServer(construateJson(word,language));
+//        listenTranslateResponse();
+        String response = listenTranslateResponse();
+        JsonSerializer serializer = new JsonSerializer(response);
+
+        return serializer.getElement("word");
     }
 
 
